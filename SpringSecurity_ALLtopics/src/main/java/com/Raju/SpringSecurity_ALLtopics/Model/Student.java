@@ -1,4 +1,4 @@
-package com.Raju.SpringSecurity_ALLtopics.Controller;
+package com.Raju.SpringSecurity_ALLtopics.Model;
 
 public class Student {
 
