@@ -8,25 +8,25 @@ import org.springframework.stereotype.Repository;
 @Entity //
 public class Users { // this is user class which is used to store the user details in the database
     @Id
-    private Integer ID;
+    private Integer id;
     private String username;
-    private String PASSWORD;
+    private String password;
 
-    public Users() {
+    public Users() { //
     }
 
-    public Users(Integer id, String name, String password) {
-        this.ID = ID;
+    public Users(Integer id, String name, String password) { //
+        this.id = id;
         this.username = username;
-        this.PASSWORD = PASSWORD;
+        this.password = password;
     }
 
     public Integer getId() {
-        return ID;
+        return id;
     }
 
     public void setId(Integer ID) {
-        this.ID = ID;
+        this.id = id;
     }
 
     public String getUsername() {
@@ -38,10 +38,10 @@ public class Users { // this is user class which is used to store the user detai
     }
 
     public String getPassword() {
-        return PASSWORD;
+        return password;
     }
 
-    public void setPassword(String PASSWORD) {
-        this.PASSWORD = PASSWORD;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

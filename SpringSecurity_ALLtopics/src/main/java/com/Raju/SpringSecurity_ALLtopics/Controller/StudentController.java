@@ -17,7 +17,7 @@ public class StudentController {
   List<Student> students = new ArrayList<>(List.of(
           new Student(1,"raju","35"),
           new Student(2,"shiva","45"),
-          new Student(3,"ramu","55")));
+          new Student(3,"ramu","55"))); // we are creating a list of students and adding some students to the list
 
 
 
@@ -25,14 +25,16 @@ public class StudentController {
     public List<Student> getallstudent(){
         return students;
     }
+
+
     @PostMapping("/students")
     public Student addstudent(@RequestBody Student student){
         students.add(student);
         return student;
     }
-@GetMapping("/csrf-token")
-public CsrfToken getcsfrtokenid(HttpServletRequest request)  {
-    return (CsrfToken) request.getAttribute("_csrf");
+    @GetMapping("/csrf-token")
+    public CsrfToken getcsfrtokenid(HttpServletRequest request)  {
+        return (CsrfToken) request.getAttribute("_csrf");
 
 }
 

@@ -1,6 +1,7 @@
 package com.Raju.SpringSecurity_ALLtopics.config;
 
 
+import com.Raju.SpringSecurity_ALLtopics.Service.MyUserDetailsService;
 import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,7 +27,7 @@ public class StudentConfig {
 
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private MyUserDetailsService userDetailsService; // this is for autowiring the UserDetailsService bean, which is an interface that provides a way to retrieve user details for authentication and authorization purposes. The UserDetailsService is typically implemented to load user details from a database or other persistent storage. In this case, we are assuming that there is a UserDetailsService bean defined elsewhere in the application context that will be injected into this configuration class.
 
    @Bean                                                                                                    // this is for defining a bean in the Spring application context. A bean is an object that is managed by the Spring container and can be injected into other components of the application. In this case, we are defining a bean of type SecurityFilterChain, which is used to configure the security settings for the application.
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {                                          // this is for configuring the security filter chain, which is a series of filters that are applied to incoming HTTP requests to enforce security policies. The SecurityFilterChain is responsible for processing authentication and authorization for each request.
@@ -40,7 +42,7 @@ public class StudentConfig {
 
     //   @Bean
 //    public UserDetailsService userdetailsService(){ // this is for defining a bean of type UserDetailsService, which is an interface that provides a way to retrieve user details for authentication and authorization purposes. In this case, we are using an in-memory implementation of UserDetailsService, which means that the user details will be stored in memory and will not persist across application restarts.
-//      UserDetails user1= User //
+//      UserDetails user1= User // this is for creating a user details object for the first user (user1) with the username "shiva", password "shiva123", and role "ADMIN". The withDefaultPasswordEncoder() method is used to encode the password using a default password encoder, which is not recommended for production use but can be useful for testing or demonstration purposes. The build() method is used to create the UserDetails object from the provided information.
 //              .withDefaultPasswordEncoder() // this is for encoding the password using a default password encoder. This is not recommended for production use, as it is not secure, but it can be useful for testing or demonstration purposes.
 //              .username("shiva")
 //              .password("shiva123")
@@ -59,7 +61,7 @@ public class StudentConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
-        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        provider.setPasswordEncoder(new BCryptPasswordEncoder(12)); // this is for setting the password encoder for the authentication provider. The DaoAuthenticationProvider is a specific implementation of AuthenticationProvider that retrieves user details from a UserDetailsService and uses a PasswordEncoder to validate the user's credentials. In this case, we are using BCryptPasswordEncoder with a strength of 12, which is a secure choice for password hashing. This means that when a user attempts to authenticate, the provided password will be encoded using BCrypt and compared to the stored encoded password in the database to determine if the authentication is successful.
         return provider;
     }
 
